@@ -12,10 +12,11 @@ public class DemoRoute extends RouteBuilder {
   public void configure() throws Exception {
 
     from("timer://demotimer?period=15s&daemon=true")
-        .log("Running")
+        .log("Executing timer route")
         .to("direct:querydb");
 
     from("direct:querydb")
+        .log("Executing direct route called by timer")
         .bean(DemoBean.class);
   }
 }

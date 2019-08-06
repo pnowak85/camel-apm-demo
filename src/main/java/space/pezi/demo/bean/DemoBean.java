@@ -1,6 +1,8 @@
 package space.pezi.demo.bean;
 
 import org.apache.camel.Handler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -10,6 +12,8 @@ import co.elastic.apm.api.CaptureSpan;
 
 @Service
 public class DemoBean {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(DemoBean.class);
 
   @Value("${jdbc.countquerytable1}")
   private String countQueryTable;
@@ -30,6 +34,6 @@ public class DemoBean {
   public void queryTable1() {
     int result = jdbcTemplate.getJdbcTemplate().queryForObject("SELECT count(*) from " + countQueryTable,
                                                                Integer.class);
-    System.out.println("Camel routebean DB query executed - " + result + " rows");
+    LOGGER.info("Camel routebean DB query executed - " + result + " rows");
   }
 }
